@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import AlamofireImage
 import Foundation
 
 class HttpClient {
@@ -43,12 +44,13 @@ class HttpClient {
             }
             switch statusCode {
             case 200 ... 299:
-                guard let result = try? res.result.get() else {
-                    print("Could not decode \(T.self)")
+                do {
+                    let result = try res.result.get()
+                    completion(.success(result))
+                } catch let jsonError as NSError {
                     completion(.failure(CommonError.decodeError))
-                    return
+                    print("JSON decode failed: \(jsonError)")
                 }
-                completion(.success(result))
             case 400:
                 completion(.failure(CommonError.badRequest))
             case 401:
@@ -59,6 +61,25 @@ class HttpClient {
                 completion(.failure(CommonError.notFound))
             default:
                 completion(.failure(CommonError.serverError))
+            }
+        }
+    }
+
+    func getImage(url: String, completion: @escaping(Result<Image, Error>) -> Void) {
+        guard let fullURL = URL(string: baseURL + url) else {
+            completion(.success(Image()))
+            return
+        }
+        let cache = NSCache<NSString, Image>()
+        let cacheString = NSString(string: baseURL + url)
+        let fullURLRequest = URLRequest(url: fullURL)
+        if let cachedImage = cache.object(forKey: cacheString) {
+            completion(.success(cachedImage))
+        }
+        AF.request(fullURLRequest).responseImage { response in
+            if case let .success(image) = response.result {
+                cache.setObject(image, forKey: cacheString)
+                completion(.success(image))
             }
         }
     }

@@ -9,15 +9,19 @@ import Foundation
 
 final class GetPokemonsUseCase: UseCase {
     private let repository: PokemonRepository
-    typealias Params = Any?
+    typealias Params = String?
     typealias ReturnType = Result<Pokemon, Error>
 
     init(repository: PokemonRepository) {
         self.repository = repository
     }
 
-    func execute(params _: Params = nil, completion: @escaping (ReturnType) -> Void) {
-        repository.getPokemons { result in
+    func execute(params next: Params = nil, completion: @escaping (ReturnType) -> Void) {
+        var nextURL: String?
+        if let next = next {
+            nextURL = next.replacingOccurrences(of: Urls.pokemonBaseURL, with: "")
+        }
+        repository.getPokemons(next: nextURL) { result in
             completion(result)
         }
     }

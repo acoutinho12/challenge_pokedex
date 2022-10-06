@@ -15,3 +15,10 @@ protocol ViewController where Self: UIViewController {
     func configureConstraints()
     func handle(error: Error)
 }
+
+extension ViewController {
+    func addSubViews() {}
+    func configureSubViews() {}
+    func configureConstraints() {}
+    func handle(error _: Error) {}
+}

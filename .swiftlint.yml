@@ -82,6 +82,8 @@ identifier_name:
 large_tuple: 3
 number_separator:
   minimum_length: 5
+cyclomatic_complexity: 30
+function_body_length: 60
 
 unused_import:
   always_keep_imports:

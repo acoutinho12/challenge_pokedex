@@ -14,6 +14,9 @@ protocol PokemonViewModelProtocol: ViewModel {
 }
 
 final class PokemonViewModel: PokemonViewModelProtocol {
+    var isFetching = true
+    var next: String?
+
     var pokemons = PublishSubject<[PokemonResult]>()
     private let getPokemonsUseCase: GetPokemonsUseCase
 
@@ -25,12 +28,23 @@ final class PokemonViewModel: PokemonViewModelProtocol {
         getPokemons()
     }
 
+    func getNextPokemons() {
+        isFetching = true
+        if next != nil {
+            getPokemons()
+        }
+    }
+
     func getPokemons() {
-        getPokemonsUseCase.execute { pokemons in
+        getPokemonsUseCase.execute(params: next) { [weak self] pokemons in
+            self?.isFetching = false
             switch pokemons {
             case let .success(pokemons):
-                self.pokemons.onNext(pokemons.results)
-                self.pokemons.onCompleted()
+                self?.next = pokemons.next
+                self?.pokemons.onNext(pokemons.results)
+                if self?.next == nil {
+                    self?.pokemons.onCompleted()
+                }
             case let .failure(error):
                 return
             }

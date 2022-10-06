@@ -8,5 +8,6 @@
 import Foundation
 
 protocol PokemonRepository: AnyObject {
-    func getPokemons(completion: @escaping(Result<Pokemon, Error>) -> Void)
+    func getPokemons(next: String?, completion: @escaping(Result<Pokemon, Error>) -> Void)
+    func getPokemonDetails(id: String, completion: @escaping(Result<PokemonDetails, Error>) -> Void)
 }

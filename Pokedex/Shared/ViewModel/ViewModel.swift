@@ -7,6 +7,10 @@
 
 import Foundation
 
-protocol ViewModel {
+protocol ViewModel: AnyObject {
     func viewDidLoad()
+}
+
+extension ViewModel {
+    func viewDidLoad() {}
 }

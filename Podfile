@@ -5,10 +5,12 @@ target 'Pokedex' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Alamofire'
+  pod 'AlamofireImage'
   pod 'SwiftLint'
   pod 'SwiftFormat/CLI'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'ImageSlideshow'
 
   # Pods for Pokedex
 

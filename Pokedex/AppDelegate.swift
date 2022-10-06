@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navController = UINavigationController()
-        let coordinator = HomeCoordinator(navigationController: navController)
+        let repository = PokemonRepositoryImpl(datasource: PokemonDataSourceImpl())
+        let coordinator = HomeCoordinator(navigationController: navController, repository: repository)
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
