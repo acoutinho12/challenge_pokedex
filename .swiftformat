@@ -1,0 +1,77 @@
+# file options
+
+--exclude PokeDexTests/XCTestManifests.swift,PokeDexTests/BadConfig,Snapshots,Build,Pods
+
+--acronyms UUID
+--allman false
+--assetliterals visual-width
+--beforemarks
+--binarygrouping 4,8
+--classthreshold 0
+--closingparen same-line
+--closurevoid remove
+--commas inline
+--conflictmarkers reject
+--decimalgrouping 3,6
+--elseposition same-line
+--emptybraces no-space
+--exclude Package.swift,Sources/Resources/Generated/*.swift
+--exponentcase lowercase
+--exponentgrouping disabled
+--extensionacl on-declarations
+--extensionlength 0
+--extensionmark "MARK: - %t + %c"
+--fractiongrouping disabled
+--fragment false
+--funcattributes prev-line
+--groupedextension "MARK: %c"
+--guardelse auto
+--header ignore
+--hexgrouping 4,8
+--hexliteralcase uppercase
+--ifdef no-indent
+--importgrouping testable-last
+--indent 4
+--indentcase false
+--indentstrings true
+--lifecycle
+--lineaftermarks true
+--linebreaks lf
+--markcategories true
+--markextensions always
+--marktypes always
+--maxwidth 180
+--modifierorder acl,override,required
+--nevertrailing
+--nospaceoperators
+--nowrapoperators
+--octalgrouping 4,8
+--operatorfunc spaced
+--patternlet hoist
+--ranges spaced
+--redundanttype inferred
+--self remove
+--selfrequired expect,size,log
+--semicolons inline
+--shortoptionals always
+--smarttabs enabled
+--stripunusedargs always
+--swiftversion 5.5
+--tabwidth unspecified
+--trailingclosures
+--trimwhitespace always
+--typeattributes prev-line
+--typemark "MARK: - %t"
+--varattributes preserve
+--voidtype void
+--wraparguments after-first
+--wrapcollections after-first
+--wrapconditions after-first
+--wrapparameters after-first
+--wrapreturntype if-multiline
+--wrapternary default
+--wraptypealiases after-first
+--xcodeindentation disabled
+--yodaswap always
+--disable blankLinesAtEndOfScope,blankLinesAtStartOfScope,consecutiveBlankLines,fileHeader,initCoderUnavailable,leadingDelimiters,linebreaks,numberFormatting,redundantBackticks,redundantExtensionACL,redundantLet,redundantObjc,semicolons,spaceAroundBrackets,spaceAroundComments,spaceAroundGenerics,spaceAroundOperators,spaceAroundParens,spaceInsideBrackets,spaceInsideComments,spaceInsideGenerics,spaceInsideParens,void,wrapMultilineStatementBraces,yodaConditions
+--enable blankLinesBetweenImports,isEmpty,acronyms
