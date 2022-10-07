@@ -81,7 +81,7 @@ class PokemonCollectionView: UICollectionViewController {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if offsetY > contentHeight - scrollView.frame.size.height, !getPokemons().isEmpty, !(viewModel?.isFetching ?? true) {
+        if offsetY > contentHeight - scrollView.frame.size.height, !getPokemons().isEmpty, !(viewModel?.isFetching ?? true), pokemonsFiltered.count == pokemons.count {
             viewModel?.getNextPokemons()
         }
     }
@@ -162,7 +162,7 @@ extension PokemonCollectionView: UICollectionViewDelegateFlowLayout {
     }
 
     override func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let id = pokemons[indexPath.row].getPokemonID() else { return }
+        guard let id = pokemonsFiltered[indexPath.row].getPokemonID() else { return }
         coordinator?.goToDetails(id: id)
     }
 }

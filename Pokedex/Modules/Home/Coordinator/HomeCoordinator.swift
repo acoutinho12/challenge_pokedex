@@ -27,8 +27,16 @@ final class HomeCoordinator: Coordinator {
 
     func goToDetails(id: String) {
         let getPokemonDetailsUseCase = GetPokemonDetailsUseCase(repository: repository)
-        let viewModel = PokemonDetailsViewModel(getPokemonDetailsUseCase: getPokemonDetailsUseCase, id: id)
+        let getPokemonEvolutionChain = GetPokemonEvolutionChainUseCase(repository: repository)
+        let viewModel = PokemonDetailsViewModel(getPokemonDetailsUseCase: getPokemonDetailsUseCase, getPokemonEvolutionChainUseCase: getPokemonEvolutionChain, id: id)
         let viewController = PokemonDetailsViewController(coordinator: self, viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func showAbilityInfoModal(id: String) {
+        let getPokemonAbilityDetailsUseCase = GetPokemonAbilityDetailsUseCase(repository: repository)
+        let viewModel = PokemonAbilityDetailsViewModel(getPokemonAbilityDetailsUseCase: getPokemonAbilityDetailsUseCase, id: id)
+        let viewController = PokemonAbilityDetailsViewController(coordinator: self, viewModel: viewModel)
+        navigationController?.present(viewController, animated: true)
     }
 }

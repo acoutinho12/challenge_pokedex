@@ -25,4 +25,16 @@ final class PokemonRepositoryImpl: PokemonRepository {
             completion(result)
         }
     }
+
+    func getPokemonAbilityDetails(id: String, completion: @escaping(Result<PokemonAbilityDetails, Error>) -> Void) {
+        datasource.getPokemonAbilityDetails(id: id) { result in
+            completion(result)
+        }
+    }
+
+    func getPokemonEvolutionChain(id: String, completion: @escaping(Result<PokemonEvolutionChain, Error>) -> Void) {
+        datasource.getPokemonEvolutionChain(id: id) { result in
+            completion(result)
+        }
+    }
 }

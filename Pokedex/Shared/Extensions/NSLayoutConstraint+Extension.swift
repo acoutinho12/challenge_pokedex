@@ -32,9 +32,9 @@ protocol AutoLayoutHelper {
 
     static func trailingAnchor(view: UIView, superView: UIView, constant: CGFloat)
 
-    static func yAxisAnchor(firstViewAnchor: NSLayoutYAxisAnchor, superViewAnchor: NSLayoutYAxisAnchor)
+    static func yAxisAnchor(firstViewAnchor: NSLayoutYAxisAnchor, superViewAnchor: NSLayoutYAxisAnchor, constant: CGFloat)
 
-    static func xAxisAnchor(firstViewAnchor: NSLayoutXAxisAnchor, superViewAnchor: NSLayoutXAxisAnchor)
+    static func xAxisAnchor(firstViewAnchor: NSLayoutXAxisAnchor, superViewAnchor: NSLayoutXAxisAnchor, constant: CGFloat)
 }
 
 extension NSLayoutConstraint: AutoLayoutHelper {
@@ -82,9 +82,9 @@ extension NSLayoutConstraint: AutoLayoutHelper {
 
     static func topAnchor(view: UIView, superView: UIView, isSafeArea: Bool = false, constant: CGFloat = 0.0) {
         if isSafeArea {
-            NSLayoutConstraint.activate([view.bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor, constant: constant)])
+            NSLayoutConstraint.activate([view.topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor, constant: constant)])
         } else {
-            NSLayoutConstraint.activate([view.bottomAnchor.constraint(equalTo: superView.topAnchor, constant: constant)])
+            NSLayoutConstraint.activate([view.topAnchor.constraint(equalTo: superView.topAnchor, constant: constant)])
         }
     }
 
@@ -96,11 +96,11 @@ extension NSLayoutConstraint: AutoLayoutHelper {
         NSLayoutConstraint.activate([view.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: constant)])
     }
 
-    static func xAxisAnchor(firstViewAnchor: NSLayoutXAxisAnchor, superViewAnchor: NSLayoutXAxisAnchor) {
-        NSLayoutConstraint.activate([firstViewAnchor.constraint(equalTo: superViewAnchor)])
+    static func xAxisAnchor(firstViewAnchor: NSLayoutXAxisAnchor, superViewAnchor: NSLayoutXAxisAnchor, constant: CGFloat = 0.0) {
+        NSLayoutConstraint.activate([firstViewAnchor.constraint(equalTo: superViewAnchor, constant: constant)])
     }
 
-    static func yAxisAnchor(firstViewAnchor: NSLayoutYAxisAnchor, superViewAnchor: NSLayoutYAxisAnchor) {
-        NSLayoutConstraint.activate([firstViewAnchor.constraint(equalTo: superViewAnchor)])
+    static func yAxisAnchor(firstViewAnchor: NSLayoutYAxisAnchor, superViewAnchor: NSLayoutYAxisAnchor, constant: CGFloat = 0.0) {
+        NSLayoutConstraint.activate([firstViewAnchor.constraint(equalTo: superViewAnchor, constant: constant)])
     }
 }

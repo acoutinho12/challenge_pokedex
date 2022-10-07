@@ -1,5 +1,5 @@
 //
-//  PokemonDetailsHeader.swift
+//  PokemonDetailsHeaderView.swift
 //  Pokedex
 //
 //  Created by André Luis Barbosa Coutinho on 06/10/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PokemonDetailsHeader: UIView {
+class PokemonDetailsHeaderView: UIView {
     private lazy var nameLabel: UILabel = TitleSolidLabel()
     private lazy var idLabel: UILabel = BodySolidLabel()
 
@@ -54,7 +54,7 @@ class PokemonDetailsHeader: UIView {
     private func configureSubView() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.textColor = .white
-        let topConstant: CGFloat = 64.0
+        let topConstant: CGFloat = 8.0
         let horizontalPadding: CGFloat = 16.0
         NSLayoutConstraint.topAnchor(view: nameLabel, superView: self, isSafeArea: true, constant: topConstant)
         NSLayoutConstraint.leadingAnchor(view: nameLabel, superView: self, constant: horizontalPadding)

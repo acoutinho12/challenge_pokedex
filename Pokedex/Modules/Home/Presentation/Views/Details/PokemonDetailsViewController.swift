@@ -16,14 +16,17 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
 
     private let disposeBag = DisposeBag()
 
-    private let pokemonDetailsHeader = PokemonDetailsHeader()
+    private let pokemonDetailsHeader = PokemonDetailsHeaderView()
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private let imageSlideshow = ImageSlideshow()
+    private let pokemonCarousel = PokemonCarouselView()
+    private let pokemonStatsView = PokemonStatsView()
+    private var pokemonAbilitiesView: PokemonAbilitiesView!
+    private let pokemonEvolutionChainView = PokemonEvolutionChainView()
 
     private let scrollStackViewContainer: UIStackView = {
         let view = UIStackView()
@@ -43,23 +46,30 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         return view
     }()
 
-    private let subView1: UIView = {
-        let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 350).isActive = true
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-
-    private let subview2: UIView = {
+    private let headerSubView: UIView = {
         let view = UIView()
         view.heightAnchor.constraint(equalToConstant: 300).isActive = true
         view.backgroundColor = UIColor.white
         return view
     }()
 
-    private let subview3: UIView = {
+    private let statsSubView: UIView = {
         let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        view.backgroundColor = UIColor.white
+        return view
+    }()
+
+    private let abilitiesSubView: UIView = {
+        let view = UIView()
+        view.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        view.backgroundColor = UIColor.white
+        return view
+    }()
+
+    private let evolutionChainSubView: UIView = {
+        let view = UIView()
+        view.heightAnchor.constraint(equalToConstant: 500).isActive = true
         view.backgroundColor = UIColor.white
         return view
     }()
@@ -78,117 +88,151 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         super.viewDidLoad()
         viewModel?.viewDidLoad()
         view.backgroundColor = Colors.primaryBackgroundColor
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        backButton.tintColor = .white
+        navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        pokemonAbilitiesView = PokemonAbilitiesView(coordinator: coordinator as? HomeCoordinator)
         addSubViews()
-        configureSubViews()
         configureConstraints()
+        configureSubViews()
     }
 
     func addSubViews() {
         view.addSubview(scrollView)
         scrollView.addSubview(scrollStackViewContainer)
-        subView1.addSubview(pokemonDetailsHeader)
-        subView1.addSubview(horizontalPillStackView)
-        subView1.addSubview(imageSlideshow)
-        scrollStackViewContainer.addArrangedSubview(subView1)
-        scrollStackViewContainer.addArrangedSubview(subview2)
-        scrollStackViewContainer.addArrangedSubview(subview3)
-    }
-
-    func configureCarousel(url: String) {
-        UIImageView.loadFrom(endPoint: url, urlIsFULL: true) { [weak self] pokemonImageView in
-            var images = self?.imageSlideshow.images
-            guard let pokemonImage = pokemonImageView?.image else {
-                return
-            }
-            images?.append(contentsOf: [ImageSource(image: pokemonImage)])
-            self?.imageSlideshow.setImageInputs(images!)
-        }
+        headerSubView.addSubview(pokemonDetailsHeader)
+        headerSubView.addSubview(horizontalPillStackView)
+        headerSubView.addSubview(pokemonCarousel)
+        statsSubView.addSubview(pokemonStatsView)
+        abilitiesSubView.addSubview(pokemonAbilitiesView)
+        evolutionChainSubView.addSubview(pokemonEvolutionChainView)
+        scrollStackViewContainer.addArrangedSubview(headerSubView)
+        scrollStackViewContainer.addArrangedSubview(statsSubView)
+        scrollStackViewContainer.addArrangedSubview(abilitiesSubView)
     }
 
     func configureSubViews() {
         if let viewModel = viewModel as? PokemonDetailsViewModel {
             viewModel.pokemonDetails.subscribe(onNext: { [weak self] in
                 self?.pokemonDetailsHeader.setup(pokemonDetails: $0)
-                self?.setBackgroundColor(pokemonDetails: $0)
-                $0.types?.forEach {
-                    guard let type = $0.type else { return }
-                    self?.addTypePill(species: type)
-                }
-                guard let sprites = $0.sprites else {
-                    return
-                }
-                let encoded = try? JSONEncoder().encode(sprites)
-                guard let dictionary = try? JSONSerialization.jsonObject(with: encoded!, options: .allowFragments) as? [String: Any] else {
-                    return
-                }
-                dictionary.iterateThroughAllKeyValues { _, value in
-                    guard let value = value as? String else {
-                        return
+                let backGroundColor = Colors.getColorBy(type: ColorsType(rawValue: $0.types?.first?.type?.name ?? "unknown") ?? .unknown)
+                self?.setBackgroundColor(backGroundColor: backGroundColor)
+                self?.pokemonStatsView.setTitle(color: backGroundColor, width: self?.view.frame.width ?? 0)
+                if let stats = $0.stats {
+                    stats.forEach {
+                        self?.pokemonStatsView.setup(stat: $0, color: backGroundColor)
                     }
-                    self?.configureCarousel(url: value)
                 }
+                if let types = $0.types {
+                    self?.addTypePills(types: types)
+                }
+                if let sprites = $0.sprites {
+                    self?.configureCarousel(sprites: sprites)
+                }
+                if let abilities = $0.abilities {
+                    self?.pokemonAbilitiesView.setup(abilities: abilities, color: backGroundColor)
+                }
+                self?.setEvolutionChain(backGroundColor: backGroundColor)
             }).disposed(by: disposeBag)
         }
     }
 
-    private func addTypePill(species: Species) {
-        let pill = PokemonTypePill()
-        pill.setup(species: species)
-        horizontalPillStackView.addArrangedSubview(pill)
+    private func setEvolutionChain(backGroundColor: UIColor) {
+        if let viewModel = viewModel as? PokemonDetailsViewModel {
+            viewModel.pokemonEvolutionChain.subscribe(onNext: { [weak self] in
+                self?.scrollStackViewContainer.addArrangedSubview(self?.evolutionChainSubView ?? UIView())
+                self?.setPokemonEvolutionChainConstraints()
+                self?.pokemonEvolutionChainView.setup(evolutionChain: $0, color: backGroundColor)
+            }).disposed(by: disposeBag)
+        }
     }
 
-    private func setBackgroundColor(pokemonDetails: PokemonDetails) {
-        scrollView.backgroundColor = Colors.getColorBy(type: ColorsType(rawValue: pokemonDetails.types?.first?.type?.name ?? "unknown") ?? .unknown)
+    private func addTypePills(types: [TypeElement]) {
+        let typeCount = types.count
+        if typeCount <= 0 {
+            return
+        }
+        let width = (horizontalPillStackView.frame.width / CGFloat(typeCount)) - (typeCount > 1 ? CGFloat(32 / typeCount) : 0)
+        types.forEach {
+            guard let species = $0.type else { return }
+            let pill = PokemonTypePillView()
+            pill.setup(species: species, width: width)
+            horizontalPillStackView.addArrangedSubview(pill)
+        }
+    }
+
+    private func configureCarousel(sprites: Sprites) {
+        let encoded = try? JSONEncoder().encode(sprites)
+        guard let dictionary = try? JSONSerialization.jsonObject(with: encoded!, options: .allowFragments) as? [String: Any] else {
+            return
+        }
+        dictionary.iterateThroughAllKeyValues { [weak self] _, value in
+            guard let value = value as? String else {
+                return
+            }
+            self?.pokemonCarousel.configureCarousel(url: value)
+        }
+    }
+
+    private func setBackgroundColor(backGroundColor: UIColor) {
+        scrollView.backgroundColor = backGroundColor
     }
 
     func configureConstraints() {
+        // pokemonDetailsHeader
         pokemonDetailsHeader.translatesAutoresizingMaskIntoConstraints = false
         let height = 250.0
         let width = view.frame.width
-
         NSLayoutConstraint.heightConstant(view: pokemonDetailsHeader, constant: height)
         NSLayoutConstraint.widthConstant(view: pokemonDetailsHeader, constant: width)
+        NSLayoutConstraint.centerX(view: pokemonDetailsHeader, superView: headerSubView)
+        NSLayoutConstraint.topAnchor(view: pokemonDetailsHeader, superView: headerSubView)
 
-        let margins = view.layoutMarginsGuide
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        // scrollView
+        NSLayoutConstraint.leadingAnchor(view: scrollView, superView: view)
+        NSLayoutConstraint.trailingAnchor(view: scrollView, superView: view)
+        NSLayoutConstraint.topAnchor(view: scrollView, superView: view)
+        NSLayoutConstraint.bottomAnchor(view: scrollView, superView: view, isSafeArea: true)
 
-        scrollStackViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        scrollStackViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        scrollStackViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        scrollStackViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        scrollStackViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        // scrollStackViewContainer
+        NSLayoutConstraint.leadingAnchor(view: scrollStackViewContainer, superView: scrollView)
+        NSLayoutConstraint.trailingAnchor(view: scrollStackViewContainer, superView: scrollView)
+        NSLayoutConstraint.topAnchor(view: scrollStackViewContainer, superView: scrollView)
+        NSLayoutConstraint.bottomAnchor(view: scrollStackViewContainer, superView: scrollView)
+        NSLayoutConstraint.widthAnchor(view: scrollStackViewContainer, superView: scrollView)
 
-        horizontalPillStackView.bottomAnchor.constraint(equalTo: subView1.bottomAnchor).isActive = true
-        horizontalPillStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        horizontalPillStackView.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5).isActive = true
-        horizontalPillStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // horizontalPillStackView
+        NSLayoutConstraint.bottomAnchor(view: horizontalPillStackView, superView: headerSubView)
+        NSLayoutConstraint.heightConstant(view: horizontalPillStackView, constant: 60)
+        NSLayoutConstraint.widthConstant(view: horizontalPillStackView, constant: view.frame.width * 0.8)
+        NSLayoutConstraint.centerX(view: horizontalPillStackView, superView: scrollView)
 
-        let imageSlideShowWH = view.frame.width / 2
-        imageSlideshow.frame = CGRect(x: view.frame.width / 4, y: imageSlideShowWH / 2, width: imageSlideShowWH, height: imageSlideShowWH)
-        imageSlideshow.pageIndicator = {
-            let pageControl = UIPageControl()
+        // pokemonCarousel
+        pokemonCarousel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.heightConstant(view: pokemonCarousel, constant: view.frame.width * 0.48)
+        NSLayoutConstraint.widthConstant(view: pokemonCarousel, constant: view.frame.width)
+        NSLayoutConstraint.center(view: pokemonCarousel, superView: headerSubView)
 
-            if #available(iOS 13.0, *) {
-                pageControl.currentPageIndicatorTintColor = UIColor { traits in
-                    traits.userInterfaceStyle == .dark ? .white : .lightGray
-                }
-            } else {
-                pageControl.currentPageIndicatorTintColor = .lightGray
-            }
+        // pokemonStatsView
+        pokemonStatsView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.heightAnchor(view: pokemonStatsView, superView: statsSubView)
+        NSLayoutConstraint.widthConstant(view: pokemonStatsView, constant: view.frame.width)
+        NSLayoutConstraint.center(view: pokemonStatsView, superView: statsSubView)
 
-            if #available(iOS 13.0, *) {
-                pageControl.pageIndicatorTintColor = UIColor { traits in
-                    traits.userInterfaceStyle == .dark ? .systemGray : .black
-                }
-            } else {
-                pageControl.pageIndicatorTintColor = .systemGray
-            }
+        // pokemonAbilitiesView
+        pokemonAbilitiesView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.heightAnchor(view: pokemonAbilitiesView, superView: abilitiesSubView)
+        NSLayoutConstraint.widthConstant(view: pokemonAbilitiesView, constant: view.frame.width)
+        NSLayoutConstraint.center(view: pokemonAbilitiesView, superView: abilitiesSubView)
+    }
 
-            return pageControl
-        }()
+    private func setPokemonEvolutionChainConstraints() {
+        // pokemonEvolutionChainView
+        pokemonEvolutionChainView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.heightAnchor(view: pokemonEvolutionChainView, superView: evolutionChainSubView)
+        NSLayoutConstraint.widthConstant(view: pokemonEvolutionChainView, constant: view.frame.width)
+        NSLayoutConstraint.center(view: pokemonEvolutionChainView, superView: evolutionChainSubView)
     }
 
     func handle(error _: Error) {}
