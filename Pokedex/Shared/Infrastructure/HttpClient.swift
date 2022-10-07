@@ -83,4 +83,23 @@ class HttpClient {
             }
         }
     }
+
+    func getImageFrom(url: String, completion: @escaping(Result<Image, Error>) -> Void) {
+        guard let fullURL = URL(string: url) else {
+            completion(.success(Image()))
+            return
+        }
+        let cache = NSCache<NSString, Image>()
+        let cacheString = NSString(string: url)
+        let fullURLRequest = URLRequest(url: fullURL)
+        if let cachedImage = cache.object(forKey: cacheString) {
+            completion(.success(cachedImage))
+        }
+        AF.request(fullURLRequest).responseImage { response in
+            if case let .success(image) = response.result {
+                cache.setObject(image, forKey: cacheString)
+                completion(.success(image))
+            }
+        }
+    }
 }

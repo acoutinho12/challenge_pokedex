@@ -94,23 +94,14 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         scrollStackViewContainer.addArrangedSubview(subview3)
     }
 
-    func configureCarousel() {
-        let pokemonImage = UIImageView()
-        let imageTag = 1
-        pokemonImage.tag = imageTag
-        pokemonImage.translatesAutoresizingMaskIntoConstraints = false
-        pokemonImage.layer.zPosition = 100
-        NSLayoutConstraint.centerX(view: pokemonImage, superView: subView1)
-        NSLayoutConstraint.bottomAnchor(view: pokemonImage, superView: subView1, constant: -25)
-        NSLayoutConstraint.widthHeightConstant(view: pokemonImage, constant: 200)
-        let id: String? = "1"
-        UIImageView.loadFrom(endPoint: "\(id ?? "0").png") { [weak self] pokemonImageView in
-            guard let self = self, let view = self.subView1.viewWithTag(imageTag) as? UIImageView else {
+    func configureCarousel(url: String) {
+        UIImageView.loadFrom(endPoint: url, urlIsFULL: true) { [weak self] pokemonImageView in
+            var images = self?.imageSlideshow.images
+            guard let pokemonImage = pokemonImageView?.image else {
                 return
             }
-            view.image = pokemonImageView?.image ?? UIImageView().image
-            self.imageSlideshow.setImageInputs([ImageSource(image: view.image!)])
-//            self.imageSlideshow.setImageInputs([view])
+            images?.append(contentsOf: [ImageSource(image: pokemonImage)])
+            self?.imageSlideshow.setImageInputs(images!)
         }
     }
 
@@ -122,6 +113,19 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
                 $0.types?.forEach {
                     guard let type = $0.type else { return }
                     self?.addTypePill(species: type)
+                }
+                guard let sprites = $0.sprites else {
+                    return
+                }
+                let encoded = try? JSONEncoder().encode(sprites)
+                guard let dictionary = try? JSONSerialization.jsonObject(with: encoded!, options: .allowFragments) as? [String: Any] else {
+                    return
+                }
+                dictionary.iterateThroughAllKeyValues { _, value in
+                    guard let value = value as? String else {
+                        return
+                    }
+                    self?.configureCarousel(url: value)
                 }
             }).disposed(by: disposeBag)
         }
@@ -162,10 +166,29 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         horizontalPillStackView.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5).isActive = true
         horizontalPillStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-        imageSlideshow.backgroundColor = .blue
-        NSLayoutConstraint.centerX(view: imageSlideshow, superView: subView1)
-        NSLayoutConstraint.bottomAnchor(view: imageSlideshow, superView: subView1, constant: -25)
-        NSLayoutConstraint.widthHeightConstant(view: imageSlideshow, constant: 200)
+        let imageSlideShowWH = view.frame.width / 2
+        imageSlideshow.frame = CGRect(x: view.frame.width / 4, y: imageSlideShowWH / 2, width: imageSlideShowWH, height: imageSlideShowWH)
+        imageSlideshow.pageIndicator = {
+            let pageControl = UIPageControl()
+
+            if #available(iOS 13.0, *) {
+                pageControl.currentPageIndicatorTintColor = UIColor { traits in
+                    traits.userInterfaceStyle == .dark ? .white : .lightGray
+                }
+            } else {
+                pageControl.currentPageIndicatorTintColor = .lightGray
+            }
+
+            if #available(iOS 13.0, *) {
+                pageControl.pageIndicatorTintColor = UIColor { traits in
+                    traits.userInterfaceStyle == .dark ? .systemGray : .black
+                }
+            } else {
+                pageControl.pageIndicatorTintColor = .systemGray
+            }
+
+            return pageControl
+        }()
     }
 
     func handle(error _: Error) {}

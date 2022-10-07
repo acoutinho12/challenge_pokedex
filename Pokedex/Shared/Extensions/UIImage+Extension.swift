@@ -6,33 +6,35 @@
 import UIKit
 
 extension UIImageView {
-    static func loadFrom(endPoint: String, completion: @escaping (UIImageView?) -> Void) {
-        let activityIndicator = UIActivityIndicatorView()
+    static func loadFrom(endPoint: String, urlIsFULL: Bool = false, completion: @escaping (UIImageView?) -> Void) {
         let imageView = UIImageView()
 
-        // setup activityIndicator...
-        activityIndicator.color = .systemGray
-
-        imageView.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
-        completion(imageView)
-
         imageView.image = nil
-        activityIndicator.startAnimating()
 
         let client = HttpClient(baseURL: Urls.frontDefaultPokemonImageURL)
 
-        client.getImage(url: endPoint) { result in
-            switch result {
-            case let .success(image):
-                activityIndicator.stopAnimating()
-                imageView.image = image
-                completion(imageView)
-            default:
-                completion(UIImageView())
+        if urlIsFULL {
+            client.getImageFrom(url: endPoint) { result in
+                switch result {
+                case let .success(image):
+                    imageView.image = image
+                    completion(imageView)
+                default:
+                    completion(UIImageView())
+                }
+            }
+            return
+        } else {
+            client.getImage(url: endPoint) { result in
+                switch result {
+                case let .success(image):
+                    imageView.image = image
+                    completion(imageView)
+                default:
+                    completion(UIImageView())
+                }
             }
         }
     }
+
 }
