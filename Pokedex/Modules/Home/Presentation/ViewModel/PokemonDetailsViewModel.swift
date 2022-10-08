@@ -20,6 +20,7 @@ final class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
 
     var pokemonDetails = PublishSubject<PokemonDetails>()
     var pokemonEvolutionChain = PublishSubject<PokemonEvolutionChain>()
+    var isFetching = PublishSubject<Bool>()
     private let getPokemonDetailsUseCase: GetPokemonDetailsUseCase
     private let getPokemonEvolutionChainUseCase: GetPokemonEvolutionChainUseCase
     private let id: String
@@ -32,6 +33,7 @@ final class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     }
 
     func viewDidLoad() {
+        isFetching.onNext(true)
         getPokemonDetails()
         getPokemonEvolutionChain()
     }
@@ -50,6 +52,8 @@ final class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
 
     func getPokemonEvolutionChain() {
         getPokemonEvolutionChainUseCase.execute(params: id) { [weak self] result in
+            self?.isFetching.onNext(false)
+            self?.isFetching.onCompleted()
             switch result {
             case let .success(pokemonEvolutionChain):
                 self?.pokemonEvolutionChain.onNext(pokemonEvolutionChain)

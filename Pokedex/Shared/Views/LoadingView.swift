@@ -42,6 +42,7 @@ final class LoadingView: UIView {
         spinner.stopAnimating()
         spinner.isHidden = true
         loadingLabel.isHidden = true
+        isHidden = true
     }
 
     required init?(coder: NSCoder) {

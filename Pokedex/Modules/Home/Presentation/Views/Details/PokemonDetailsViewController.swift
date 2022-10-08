@@ -26,6 +26,7 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
     private let pokemonStatsView = PokemonStatsView()
     private var pokemonAbilitiesView: PokemonAbilitiesView!
     private let pokemonEvolutionChainView = PokemonEvolutionChainView()
+    private let loadingView = LoadingView()
 
     private let scrollStackViewContainer: UIStackView = {
         let view = UIStackView()
@@ -98,6 +99,8 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
 
     func addSubViews() {
         view.addSubview(scrollView)
+        view.addSubview(loadingView)
+        scrollView.isHidden = true
         scrollView.addSubview(scrollStackViewContainer)
         headerSubView.addSubview(pokemonDetailsHeader)
         headerSubView.addSubview(horizontalPillStackView)
@@ -110,8 +113,18 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         scrollStackViewContainer.addArrangedSubview(abilitiesSubView)
     }
 
+    private func stopLoading() {
+        loadingView.stop()
+        scrollView.isHidden = false
+    }
+
     func configureSubViews() {
         if let viewModel = viewModel as? PokemonDetailsViewModel {
+            viewModel.isFetching.subscribe(onNext: { [weak self] in
+                if $0 == false {
+                    self?.stopLoading()
+                }
+            }).disposed(by: disposeBag)
             viewModel.pokemonDetails.subscribe(onNext: { [weak self] in
                 self?.pokemonDetailsHeader.setup(pokemonDetails: $0)
                 let backGroundColor = Colors.getColorBy(type: ColorsType(rawValue: $0.types?.first?.type?.name ?? "unknown") ?? .unknown)
