@@ -11,17 +11,21 @@ import RxSwift
 
 protocol PokemonViewModelProtocol: ViewModel {
     func getPokemons()
+    func goToDetails(id: String)
 }
 
 final class PokemonViewModel: PokemonViewModelProtocol {
+    var coordinator: Coordinator?
+
     var isFetching = true
     var next: String?
 
     var pokemons = PublishSubject<[PokemonResult]>()
     private let getPokemonsUseCase: GetPokemonsUseCase
 
-    init(getPokemonsUseCase: GetPokemonsUseCase) {
+    init(getPokemonsUseCase: GetPokemonsUseCase, coordinator: HomeCoordinator) {
         self.getPokemonsUseCase = getPokemonsUseCase
+        self.coordinator = coordinator
     }
 
     func viewDidLoad() {
@@ -49,5 +53,9 @@ final class PokemonViewModel: PokemonViewModelProtocol {
                 return
             }
         }
+    }
+
+    func goToDetails(id: String) {
+        (coordinator as? HomeCoordinator)?.goToDetails(id: id)
     }
 }

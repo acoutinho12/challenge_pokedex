@@ -9,11 +9,11 @@ import UIKit
 
 final class PokemonAbilitiesView: UIView {
     private let abilitiesLabel = BodySolidLabel()
-    private var coordinator: HomeCoordinator?
+    private var viewModel: PokemonDetailsViewModel?
 
-    init(coordinator: HomeCoordinator?) {
+    init(viewModel: PokemonDetailsViewModel?) {
         super.init(frame: CGRect())
-        self.coordinator = coordinator
+        self.viewModel = viewModel
     }
 
     required init?(coder: NSCoder) {
@@ -58,7 +58,7 @@ final class PokemonAbilitiesView: UIView {
             let abilityButton = InfoButton()
             abilityButton.setTitle(species.name?.capitalized, for: .normal)
             let id = species.getURLID() ?? "1"
-            let action: (() -> Void)? = { [weak self] in self?.coordinator?.showAbilityInfoModal(id: id) }
+            let action: (() -> Void)? = { [weak self] in self?.viewModel?.showAbilityInfoModal(id: id) }
             abilityButton.setAction(action: action)
             abilityButton.translatesAutoresizingMaskIntoConstraints = false
             horizontalStackView.addArrangedSubview(abilityButton)

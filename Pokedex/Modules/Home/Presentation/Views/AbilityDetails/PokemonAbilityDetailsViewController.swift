@@ -11,13 +11,11 @@ import RxSwift
 import UIKit
 
 final class PokemonAbilityDetailsViewController: UIViewController, ViewController {
-    var coordinator: Coordinator?
     var viewModel: ViewModel?
 
     private let disposeBag = DisposeBag()
 
-    init(coordinator: HomeCoordinator, viewModel: PokemonAbilityDetailsViewModel) {
-        self.coordinator = coordinator
+    init(viewModel: PokemonAbilityDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

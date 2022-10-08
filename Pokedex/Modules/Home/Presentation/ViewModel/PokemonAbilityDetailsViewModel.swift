@@ -14,6 +14,8 @@ protocol PokemonAbilityDetailsViewModelProtocol: ViewModel {
 }
 
 final class PokemonAbilityDetailsViewModel: PokemonAbilityDetailsViewModelProtocol {
+    var coordinator: Coordinator?
+
     var pokemonAbilityDetailsDetails = PublishSubject<PokemonAbilityDetails>()
     private let getPokemonAbilityDetailsUseCase: GetPokemonAbilityDetailsUseCase
     private let id: String

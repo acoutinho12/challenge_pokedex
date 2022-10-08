@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 final class PokemonDetailsViewController: UIViewController, ViewController {
-    var coordinator: Coordinator?
     var viewModel: ViewModel?
 
     private let disposeBag = DisposeBag()
@@ -74,8 +73,7 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         return view
     }()
 
-    init(coordinator: HomeCoordinator, viewModel: PokemonDetailsViewModel) {
-        self.coordinator = coordinator
+    init(viewModel: PokemonDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,7 +90,7 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
         backButton.title = ""
         backButton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        pokemonAbilitiesView = PokemonAbilitiesView(coordinator: coordinator as? HomeCoordinator)
+        pokemonAbilitiesView = PokemonAbilitiesView(viewModel: viewModel as? PokemonDetailsViewModel)
         addSubViews()
         configureConstraints()
         configureSubViews()

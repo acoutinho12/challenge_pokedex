@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class GetPokemonsUseCase: UseCase {
-    private let repository: PokemonRepository
+class GetPokemonsUseCase: UseCase {
+    let repository: PokemonRepository
     typealias Params = String?
     typealias ReturnType = Result<Pokemon, Error>
 

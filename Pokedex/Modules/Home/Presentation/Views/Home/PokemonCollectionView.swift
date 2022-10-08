@@ -17,12 +17,10 @@ class PokemonCollectionView: UICollectionViewController {
     private let spinner = UIActivityIndicatorView()
     private let loadingLabel = UILabel()
     private var viewModel: PokemonViewModel?
-    private var coordinator: HomeCoordinator?
 
-    init(viewModel: PokemonViewModel?, coordinator: HomeCoordinator?) {
+    init(viewModel: PokemonViewModel?) {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.viewModel = viewModel
-        self.coordinator = coordinator
         setup()
     }
 
@@ -163,7 +161,7 @@ extension PokemonCollectionView: UICollectionViewDelegateFlowLayout {
 
     override func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let id = pokemonsFiltered[indexPath.row].getPokemonID() else { return }
-        coordinator?.goToDetails(id: id)
+        viewModel?.goToDetails(id: id)
     }
 }
 

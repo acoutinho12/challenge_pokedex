@@ -8,11 +8,9 @@
 import UIKit
 
 final class PokemonViewController: UIViewController, ViewController {
-    var coordinator: Coordinator?
     var viewModel: ViewModel?
 
-    init(coordinator: HomeCoordinator, viewModel: PokemonViewModel) {
-        self.coordinator = coordinator
+    init(viewModel: PokemonViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -21,7 +19,7 @@ final class PokemonViewController: UIViewController, ViewController {
         super.init(coder: coder)
     }
 
-    private lazy var pokemonCollectionView: PokemonCollectionView = .init(viewModel: self.viewModel as? PokemonViewModel, coordinator: self.coordinator as? HomeCoordinator)
+    private lazy var pokemonCollectionView: PokemonCollectionView = .init(viewModel: self.viewModel as? PokemonViewModel)
     private lazy var searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {

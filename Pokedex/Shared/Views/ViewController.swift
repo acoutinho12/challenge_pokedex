@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ViewController where Self: UIViewController {
-    var coordinator: Coordinator? { get set }
     var viewModel: ViewModel? { get set }
     func addSubViews()
     func configureSubViews()
