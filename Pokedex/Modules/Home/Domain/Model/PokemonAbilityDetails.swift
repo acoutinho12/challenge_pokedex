@@ -105,4 +105,3 @@ struct PokemonInfoGeneration: Codable {
         case pokemon, slot
     }
 }
-
