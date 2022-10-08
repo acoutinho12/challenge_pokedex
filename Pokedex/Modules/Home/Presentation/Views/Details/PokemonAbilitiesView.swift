@@ -56,9 +56,10 @@ final class PokemonAbilitiesView: UIView {
                 return
             }
             let abilityButton = InfoButton()
+            let abilityName = species.name?.capitalized ?? ""
             abilityButton.setTitle(species.name?.capitalized, for: .normal)
             let id = species.getURLID() ?? "1"
-            let action: (() -> Void)? = { [weak self] in self?.viewModel?.showAbilityInfoModal(id: id) }
+            let action: (() -> Void)? = { [weak self] in self?.viewModel?.showAbilityInfoModal(id: id, abilityName: abilityName) }
             abilityButton.setAction(action: action)
             abilityButton.translatesAutoresizingMaskIntoConstraints = false
             horizontalStackView.addArrangedSubview(abilityButton)

@@ -5,66 +5,28 @@
 //  Created by André Luis Barbosa Coutinho on 07/10/22.
 //
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let pokemonAbilityDetails = try? newJSONDecoder().decode(PokemonAbilityDetails.self, from: jsonData)
+//   let pokemonAbilityDetail = try? newJSONDecoder().decode(PokemonAbilityDetail.self, from: jsonData)
 
 import Foundation
 
-// MARK: - PokemonAbilityDetails
+// MARK: - PokemonAbilityDetail
 
 struct PokemonAbilityDetails: Codable {
-    let effectChanges: [EffectChange]?
-    let effectEntries: [PokemonAbilityDetailsEffectEntry]?
-    let flavorTextEntries: [FlavorTextEntry]?
-    let generation: Generation?
-    let id: Int?
-    let isMainSeries: Bool?
-    let name: String?
-    let names: [Name]?
-    let pokemon: [PokemonInfoGeneration]?
-
-    enum CodingKeys: String, CodingKey {
-        case effectChanges = "effect_changes"
-        case effectEntries = "effect_entries"
-        case flavorTextEntries = "flavor_text_entries"
-        case generation, id
-        case isMainSeries = "is_main_series"
-        case name, names, pokemon
-    }
-}
-
-// MARK: - EffectChange
-
-struct EffectChange: Codable {
-    let effectEntries: [EffectChangeEffectEntry]?
-    let versionGroup: Generation?
+    let effectEntries: [EffectEntry]?
 
     enum CodingKeys: String, CodingKey {
         case effectEntries = "effect_entries"
-        case versionGroup = "version_group"
     }
 }
 
-// MARK: - EffectChangeEffectEntry
+// MARK: - EffectEntry
 
-struct EffectChangeEffectEntry: Codable {
+struct EffectEntry: Codable {
     let effect: String?
-    let language: Generation?
-}
-
-// MARK: - Generation
-
-struct Generation: Codable {
-    let name: String?
-    let url: String?
-}
-
-// MARK: - PokemonAbilityDetailsEffectEntry
-
-struct PokemonAbilityDetailsEffectEntry: Codable {
-    let effect: String?
-    let language: Generation?
+    let language: Language?
     let shortEffect: String?
 
     enum CodingKeys: String, CodingKey {
@@ -73,35 +35,9 @@ struct PokemonAbilityDetailsEffectEntry: Codable {
     }
 }
 
-// MARK: - FlavorTextEntry
+// MARK: - Language
 
-struct FlavorTextEntry: Codable {
-    let flavorText: String?
-    let language, versionGroup: Generation?
-
-    enum CodingKeys: String, CodingKey {
-        case flavorText = "flavor_text"
-        case language
-        case versionGroup = "version_group"
-    }
-}
-
-// MARK: - Name
-
-struct Name: Codable {
-    let language: Generation?
+struct Language: Codable {
     let name: String?
-}
-
-// MARK: - Pokemon
-
-struct PokemonInfoGeneration: Codable {
-    let isHidden: Bool?
-    let pokemon: Generation?
-    let slot: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case isHidden = "is_hidden"
-        case pokemon, slot
-    }
+    let url: String?
 }

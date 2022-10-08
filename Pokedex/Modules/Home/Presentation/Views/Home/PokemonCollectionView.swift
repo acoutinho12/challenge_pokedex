@@ -13,10 +13,8 @@ class PokemonCollectionView: UICollectionViewController {
     private var pokemonsFiltered: [PokemonResult] = []
     private let disposeBag = DisposeBag()
 
-    private let loadingView = UIView()
-    private let spinner = UIActivityIndicatorView()
-    private let loadingLabel = UILabel()
     private var viewModel: PokemonViewModel?
+    private var loadingView = LoadingView()
 
     init(viewModel: PokemonViewModel?) {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -90,38 +88,18 @@ class PokemonCollectionView: UICollectionViewController {
     }
 
     private func setLoadingScreen() {
-        let width: CGFloat = 120
-        let height: CGFloat = 30
-        let xCoord = (collectionView.frame.width / 2) - (width / 2)
-        let yCoord = 300.0
-        loadingView.frame = CGRect(x: xCoord, y: yCoord, width: width, height: height)
-
-        loadingLabel.textColor = .gray
-        loadingLabel.textAlignment = .center
-        loadingLabel.text = "Carregando..."
-        loadingLabel.frame = CGRect(x: 30, y: 0, width: 140, height: 30)
-
-        spinner.style = .gray
-        spinner.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        spinner.startAnimating()
-
-        loadingView.addSubview(spinner)
-        loadingView.addSubview(loadingLabel)
-
         collectionView.addSubview(loadingView)
     }
 
     private func removeLoadingScreen() {
-        spinner.stopAnimating()
-        spinner.isHidden = true
-        loadingLabel.isHidden = true
+        loadingView.stop()
     }
 }
 
 extension PokemonCollectionView {
     override func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         let pokemonsCell = getPokemons()
-        if (pokemonsFiltered.isEmpty && pokemons.isEmpty) || (pokemonsFiltered.isEmpty && !pokemons.isEmpty) {
+        if pokemonsFiltered.isEmpty && pokemons.isEmpty || pokemonsFiltered.isEmpty && !pokemons.isEmpty, !(viewModel?.isFetching ?? true) {
             setEmptyPokemon()
             return 0
         } else {

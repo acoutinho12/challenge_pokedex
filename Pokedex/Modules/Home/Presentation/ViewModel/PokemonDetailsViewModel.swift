@@ -12,7 +12,7 @@ import RxSwift
 protocol PokemonDetailsViewModelProtocol: ViewModel {
     func getPokemonDetails()
     func getPokemonEvolutionChain()
-    func showAbilityInfoModal(id: String)
+    func showAbilityInfoModal(id: String, abilityName: String)
 }
 
 final class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
@@ -60,7 +60,7 @@ final class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
         }
     }
 
-    func showAbilityInfoModal(id: String) {
-        (coordinator as? HomeCoordinator)?.showAbilityInfoModal(id: id)
+    func showAbilityInfoModal(id: String, abilityName: String) {
+        (coordinator as? HomeCoordinator)?.showAbilityInfoModal(id: id, abilityName: abilityName)
     }
 }

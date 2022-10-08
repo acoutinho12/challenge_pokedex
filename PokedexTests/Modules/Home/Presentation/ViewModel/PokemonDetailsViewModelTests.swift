@@ -42,7 +42,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     }
 
     func test_showAbilityInfoModal_was_called() {
-        viewModel?.showAbilityInfoModal(id: "1")
+        viewModel?.showAbilityInfoModal(id: "1", abilityName: "Overgrow")
         XCTAssertEqual(coordinator?.numberOfCallsShowAbilityInfoModal, 1)
     }
 }

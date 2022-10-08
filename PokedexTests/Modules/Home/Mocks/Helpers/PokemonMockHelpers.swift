@@ -38,8 +38,7 @@ struct PokemonMockHelpers {
                                         moves: [move], name: "bulbasaur", order: 1, species: species, sprites: nil, stats: nil, types: nil,
                                         weight: 100)
 
-        pokemonAbilityDetails = PokemonAbilityDetails(effectChanges: [], effectEntries: [], flavorTextEntries: [], generation: nil, id: 1, isMainSeries: true, name: "overgrow",
-                                                      names: [], pokemon: [])
+        pokemonAbilityDetails = PokemonAbilityDetails(effectEntries: [])
 
         pokemonEvolutionChain = PokemonEvolutionChain(chain: chain, id: 1)
     }

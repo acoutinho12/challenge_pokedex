@@ -8,11 +8,6 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Pokemon Solid.ttf">
-            <string>PokemonSolidNormal</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -23,25 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="launchScreen" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LE5-Dy-uZr">
-                                <rect key="frame" x="0.0" y="44" width="414" height="512"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokedex" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrN-0v-mOh">
-                                <rect key="frame" x="0.0" y="556" width="414" height="67.5"/>
-                                <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="48"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="LE5-Dy-uZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9uf-ym-07X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LE5-Dy-uZr" secondAttribute="trailing" id="T0S-dG-2Fl"/>
-                            <constraint firstItem="DrN-0v-mOh" firstAttribute="top" secondItem="LE5-Dy-uZr" secondAttribute="bottom" id="l7B-J9-lOx"/>
-                            <constraint firstItem="DrN-0v-mOh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="llx-rJ-bo1"/>
-                            <constraint firstItem="LE5-Dy-uZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rAv-bO-tJj"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DrN-0v-mOh" secondAttribute="trailing" id="yWV-yn-Urf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DrN-0v-mOh" secondAttribute="bottom" constant="238.5" id="zP3-pA-Tzm"/>
+                            <constraint firstItem="LE5-Dy-uZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1az-Rh-GaO"/>
+                            <constraint firstItem="LE5-Dy-uZr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="AXf-6i-lAP"/>
+                            <constraint firstItem="LE5-Dy-uZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HzJ-N8-2mB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="LE5-Dy-uZr" secondAttribute="bottom" id="md6-Kj-gno"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -51,7 +37,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchScreen" width="512" height="512"/>
+        <image name="launchScreen" width="256" height="256"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

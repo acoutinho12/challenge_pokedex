@@ -39,13 +39,15 @@ final class PokemonCarouselView: ImageSlideshow {
     }
 
     func configureCarousel(url: String) {
-        UIImageView.loadFrom(endPoint: url, urlIsFULL: true) { [weak self] pokemonImageView in
-            var images = self?.images
-            guard let pokemonImage = pokemonImageView?.image else {
-                return
+        DispatchQueue.main.async {
+            UIImageView.loadFrom(endPoint: url, urlIsFULL: true) { [weak self] pokemonImageView in
+                var images = self?.images
+                guard let pokemonImage = pokemonImageView?.image else {
+                    return
+                }
+                images?.append(contentsOf: [ImageSource(image: pokemonImage)])
+                self?.setImageInputs(images!)
             }
-            images?.append(contentsOf: [ImageSource(image: pokemonImage)])
-            self?.setImageInputs(images!)
         }
     }
 }

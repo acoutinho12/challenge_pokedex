@@ -78,10 +78,15 @@ final class PokemonEvolutionChainView: UIView {
             NSLayoutConstraint.heightConstant(view: uiView, constant: 450)
             NSLayoutConstraint.widthConstant(view: uiView, constant: 450)
             NSLayoutConstraint.topAnchor(view: uiView, superView: horizontalStackView, constant: 16)
+
             NSLayoutConstraint.heightConstant(view: pokemonImage, constant: CGFloat(width))
-            NSLayoutConstraint.widthConstant(view: pokemonImage, constant: CGFloat(width))
+            NSLayoutConstraint.leadingAnchor(view: pokemonImage, superView: uiView)
+            NSLayoutConstraint.trailingAnchor(view: pokemonImage, superView: uiView)
+            NSLayoutConstraint.centerY(view: pokemonImage, superView: uiView)
+
             NSLayoutConstraint.heightConstant(view: name, constant: 50)
-            NSLayoutConstraint.widthAnchor(view: name, superView: uiView)
+            NSLayoutConstraint.leadingAnchor(view: name, superView: uiView)
+            NSLayoutConstraint.trailingAnchor(view: name, superView: uiView)
             NSLayoutConstraint.yAxisAnchor(firstViewAnchor: name.topAnchor, superViewAnchor: pokemonImage.bottomAnchor)
             name.text = $0.name
             name.textColor = color

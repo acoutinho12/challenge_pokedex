@@ -34,10 +34,10 @@ class HomeCoordinator: Coordinator {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    func showAbilityInfoModal(id: String) {
+    func showAbilityInfoModal(id: String, abilityName: String) {
         let getPokemonAbilityDetailsUseCase = GetPokemonAbilityDetailsUseCase(repository: repository)
         let viewModel = PokemonAbilityDetailsViewModel(getPokemonAbilityDetailsUseCase: getPokemonAbilityDetailsUseCase, id: id)
-        let viewController = PokemonAbilityDetailsViewController(viewModel: viewModel)
+        let viewController = PokemonAbilityDetailsViewController(viewModel: viewModel, abilityName: abilityName)
         navigationController?.present(viewController, animated: true)
     }
 }

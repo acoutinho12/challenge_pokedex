@@ -40,6 +40,7 @@ final class PokemonViewModel: PokemonViewModelProtocol {
     }
 
     func getPokemons() {
+        isFetching = true
         getPokemonsUseCase.execute(params: next) { [weak self] pokemons in
             self?.isFetching = false
             switch pokemons {

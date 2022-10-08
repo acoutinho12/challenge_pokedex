@@ -45,7 +45,7 @@ class HomeCoordinatorTests: XCTestCase {
 
     func test_success_PokemonAbilityDetailsViewController_is_visible() {
         coordinator?.goToDetails(id: "1")
-        coordinator?.showAbilityInfoModal(id: "1")
+        coordinator?.showAbilityInfoModal(id: "1", abilityName: "Overgrow")
         let viewController = navigationController?.presentedViewController
         XCTAssertTrue(viewController is PokemonAbilityDetailsViewController)
     }

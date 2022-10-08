@@ -47,7 +47,7 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
 
     private let headerSubView: UIView = {
         let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 350).isActive = true
         view.backgroundColor = UIColor.white
         return view
     }()
@@ -169,7 +169,9 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
             guard let value = value as? String else {
                 return
             }
-            self?.pokemonCarousel.configureCarousel(url: value)
+            DispatchQueue.main.async {
+                self?.pokemonCarousel.configureCarousel(url: value)
+            }
         }
     }
 

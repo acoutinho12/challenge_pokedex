@@ -21,7 +21,7 @@ final class HomeCoordinatorMock: HomeCoordinator {
         numberOfCallsGoToDetails += 1
     }
 
-    override func showAbilityInfoModal(id _: String) {
+    override func showAbilityInfoModal(id _: String, abilityName _: String) {
         numberOfCallsShowAbilityInfoModal += 1
     }
 }

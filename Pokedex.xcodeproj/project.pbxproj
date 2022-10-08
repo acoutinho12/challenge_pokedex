@@ -83,6 +83,10 @@
 		17C52A4F28F0ABD600860F68 /* PokemonEvolutionChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C52A4E28F0ABD600860F68 /* PokemonEvolutionChainView.swift */; };
 		17C52A5328F0BAD800860F68 /* Chain+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C52A5228F0BAD800860F68 /* Chain+Extension.swift */; };
 		17C52A5528F0C8B400860F68 /* PokemonSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C52A5428F0C8B300860F68 /* PokemonSpecies.swift */; };
+		17F8579928F2055500E3E9BB /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8579828F2055500E3E9BB /* ModalPresentationController.swift */; };
+		17F8579B28F2111700E3E9BB /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8579A28F2111700E3E9BB /* UIView+Extension.swift */; };
+		17F8579D28F21A8900E3E9BB /* PokemonAbilityDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8579C28F21A8900E3E9BB /* PokemonAbilityDetailsViewModelTests.swift */; };
+		17F8579F28F21AD900E3E9BB /* GetPokemonAbilityDetailsUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8579E28F21AD900E3E9BB /* GetPokemonAbilityDetailsUseCaseMock.swift */; };
 		4ABBEF2DB982E555A8035756 /* Pods_PokedexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F712CCAFAF2BDA780BEB97A /* Pods_PokedexTests.framework */; };
 		B766E2B55EC82D30ACCFA089 /* Pods_Pokedex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A12137246EC2207D82041C /* Pods_Pokedex.framework */; };
 /* End PBXBuildFile section */
@@ -179,6 +183,10 @@
 		17C52A4E28F0ABD600860F68 /* PokemonEvolutionChainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonEvolutionChainView.swift; sourceTree = "<group>"; };
 		17C52A5228F0BAD800860F68 /* Chain+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chain+Extension.swift"; sourceTree = "<group>"; };
 		17C52A5428F0C8B300860F68 /* PokemonSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonSpecies.swift; sourceTree = "<group>"; };
+		17F8579828F2055500E3E9BB /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
+		17F8579A28F2111700E3E9BB /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		17F8579C28F21A8900E3E9BB /* PokemonAbilityDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAbilityDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		17F8579E28F21AD900E3E9BB /* GetPokemonAbilityDetailsUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPokemonAbilityDetailsUseCaseMock.swift; sourceTree = "<group>"; };
 		2EA919789EF499A824488DF5 /* Pods-Pokedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pokedex.debug.xcconfig"; path = "Target Support Files/Pods-Pokedex/Pods-Pokedex.debug.xcconfig"; sourceTree = "<group>"; };
 		2F712CCAFAF2BDA780BEB97A /* Pods_PokedexTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokedexTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46C34A2A12119B1962C51D32 /* Pods_Pokedex_PokedexUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pokedex_PokedexUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +358,7 @@
 				17567FAD28F06C4800F057ED /* SubTitleSolidLabel.swift */,
 				17C52A3B28F0907F00860F68 /* CaptionHollowLabel.swift */,
 				17C52A3D28F0945700860F68 /* InfoButton.swift */,
+				17F8579828F2055500E3E9BB /* ModalPresentationController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -498,6 +507,7 @@
 			children = (
 				1782285328F1E9400061D98C /* PokemonViewModelTests.swift */,
 				1782285928F1EE740061D98C /* PokemonDetailsViewModelTests.swift */,
+				17F8579C28F21A8900E3E9BB /* PokemonAbilityDetailsViewModelTests.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -508,6 +518,7 @@
 				1782285528F1E9C90061D98C /* GetPokemonsUseCaseMock.swift */,
 				1782286028F1EF060061D98C /* GetPokemonDetailsUseCaseMock.swift */,
 				1782286228F1EF1B0061D98C /* GetPokemonEvolutionChainUseCaseMock.swift */,
+				17F8579E28F21AD900E3E9BB /* GetPokemonAbilityDetailsUseCaseMock.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -580,6 +591,7 @@
 				17BF8EA528EFABE60087CC7B /* Dictionary+Extension.swift */,
 				17C52A3F28F0A01C00860F68 /* Species+Extension.swift */,
 				17C52A5228F0BAD800860F68 /* Chain+Extension.swift */,
+				17F8579A28F2111700E3E9BB /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -872,6 +884,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				179B23F328EF3E7C005CA4CB /* PokemonResult+Extension.swift in Sources */,
+				17F8579928F2055500E3E9BB /* ModalPresentationController.swift in Sources */,
 				17C52A4B28F0A97600860F68 /* PokemonEvolutionChain.swift in Sources */,
 				172FC02A28EDF6E0007744FE /* PokemonCollectionView.swift in Sources */,
 				17567FAE28F06C4800F057ED /* SubTitleSolidLabel.swift in Sources */,
@@ -903,6 +916,7 @@
 				177169DC28EE489C00543F14 /* Error+Extension.swift in Sources */,
 				17567FAA28F04DCF00F057ED /* PokemonCarouselView.swift in Sources */,
 				172FC02228EDF1FD007744FE /* HomeCoordinator.swift in Sources */,
+				17F8579B28F2111700E3E9BB /* UIView+Extension.swift in Sources */,
 				179B23FB28EF4ABD005CA4CB /* PokemonDetailsViewModel.swift in Sources */,
 				17A6640D28EF18EB00FC3B40 /* Colors.swift in Sources */,
 				17BE6EB628EF5FF400EE1D2E /* UIColor+Extension.swift in Sources */,
@@ -935,12 +949,14 @@
 				1782283228F1BF440061D98C /* PokemonDataSourceSuccessMock.swift in Sources */,
 				1782285628F1E9C90061D98C /* GetPokemonsUseCaseMock.swift in Sources */,
 				1782284128F1D4560061D98C /* PokemonTests.swift in Sources */,
+				17F8579D28F21A8900E3E9BB /* PokemonAbilityDetailsViewModelTests.swift in Sources */,
 				1782283628F1C69A0061D98C /* PokemonRepositorySuccessMock.swift in Sources */,
 				1782285028F1DBC20061D98C /* HomeCoordinatorTests.swift in Sources */,
 				1782284728F1D5D90061D98C /* PokemonAbilityDetailsTests.swift in Sources */,
 				1782285A28F1EE740061D98C /* PokemonDetailsViewModelTests.swift in Sources */,
 				1782285428F1E9400061D98C /* PokemonViewModelTests.swift in Sources */,
 				1782284D28F1D7840061D98C /* PokemonSpeciesTests.swift in Sources */,
+				17F8579F28F21AD900E3E9BB /* GetPokemonAbilityDetailsUseCaseMock.swift in Sources */,
 				1782286328F1EF1B0061D98C /* GetPokemonEvolutionChainUseCaseMock.swift in Sources */,
 				1782283E28F1CF260061D98C /* PokemonRepositoryTests.swift in Sources */,
 				1782286128F1EF060061D98C /* GetPokemonDetailsUseCaseMock.swift in Sources */,

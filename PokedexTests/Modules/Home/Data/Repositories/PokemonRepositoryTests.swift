@@ -43,12 +43,9 @@ class PokemonRepositoryTests: XCTestCase {
 
     func test_success_get_pokemon_ability_details() {
         pokemonRepository?.getPokemonAbilityDetails(id: "") { [weak self] result in
-            guard case let .success(value) = result else {
+            guard case let .success = result else {
                 return XCTFail("Expected to be a success but got a failure with \(result)")
             }
-            XCTAssertEqual(value.id, self?.helper?.pokemonAbilityDetails.id)
-            XCTAssertEqual(value.name, self?.helper?.pokemonAbilityDetails.name)
-            XCTAssertEqual(value.isMainSeries, self?.helper?.pokemonAbilityDetails.isMainSeries)
             XCTAssertEqual(self?.datasource?.getPokemonAbilityDetailsNumberOfCalls, 1)
         }
     }
