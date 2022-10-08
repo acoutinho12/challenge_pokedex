@@ -40,7 +40,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(getPokemonDetailsUseCase?.numberOfCalls, 1)
         XCTAssertEqual(getPokemonEvolutionChainUseCase?.numberOfCalls, 1)
     }
-    
+
     func test_showAbilityInfoModal_was_called() {
         viewModel?.showAbilityInfoModal(id: "1")
         XCTAssertEqual(coordinator?.numberOfCallsShowAbilityInfoModal, 1)
