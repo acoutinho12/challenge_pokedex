@@ -68,7 +68,7 @@ final class PokemonDetailsViewController: UIViewController, ViewController {
 
     private let evolutionChainSubView: UIView = {
         let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 300).isActive = true
         view.backgroundColor = UIColor.white
         return view
     }()

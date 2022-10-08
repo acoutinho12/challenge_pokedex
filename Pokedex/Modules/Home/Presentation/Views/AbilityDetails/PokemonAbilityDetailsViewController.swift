@@ -63,9 +63,8 @@ final class PokemonAbilityDetailsViewController: UIViewController, ViewControlle
 
         abilityNameLabel.translatesAutoresizingMaskIntoConstraints = false
         abilityNameLabel.textAlignment = .center
-        NSLayoutConstraint.topAnchor(view: abilityNameLabel, superView: view, constant: 8)
-        NSLayoutConstraint.trailingAnchor(view: abilityDetailLabel, superView: closeLabel, constant: -8)
-        NSLayoutConstraint.leadingAnchor(view: abilityDetailLabel, superView: view, constant: 8)
+        NSLayoutConstraint.topAnchor(view: abilityNameLabel, superView: closeLabel, constant: 8)
+
         NSLayoutConstraint.heightConstant(view: abilityNameLabel, constant: 30)
         NSLayoutConstraint.centerX(view: abilityNameLabel, superView: view)
 

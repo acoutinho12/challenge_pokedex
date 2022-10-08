@@ -35,7 +35,6 @@ final class PokemonEvolutionChainView: UIView {
         evolutionChainLabel.translatesAutoresizingMaskIntoConstraints = false
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(evolutionChainLabel)
-        scrollView.contentSize = CGSize(width: CGFloat(width * species.count), height: 500)
         addSubview(scrollView)
         scrollView.addSubview(horizontalStackView)
         scrollView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -74,17 +73,17 @@ final class PokemonEvolutionChainView: UIView {
                 }
                 view.image = pokemonImageView?.image ?? UIImageView().image
             }
-//
-            NSLayoutConstraint.heightConstant(view: uiView, constant: 450)
-            NSLayoutConstraint.widthConstant(view: uiView, constant: 450)
+
+//            NSLayoutConstraint.heightConstant(view: uiView, constant: 210)
+//            NSLayoutConstraint.widthConstant(view: uiView, constant: 300)
             NSLayoutConstraint.topAnchor(view: uiView, superView: horizontalStackView, constant: 16)
 
-            NSLayoutConstraint.heightConstant(view: pokemonImage, constant: CGFloat(width))
+            NSLayoutConstraint.heightConstant(view: pokemonImage, constant: 200)
             NSLayoutConstraint.leadingAnchor(view: pokemonImage, superView: uiView)
             NSLayoutConstraint.trailingAnchor(view: pokemonImage, superView: uiView)
             NSLayoutConstraint.centerY(view: pokemonImage, superView: uiView)
 
-            NSLayoutConstraint.heightConstant(view: name, constant: 50)
+            NSLayoutConstraint.heightConstant(view: name, constant: 20)
             NSLayoutConstraint.leadingAnchor(view: name, superView: uiView)
             NSLayoutConstraint.trailingAnchor(view: name, superView: uiView)
             NSLayoutConstraint.yAxisAnchor(firstViewAnchor: name.topAnchor, superViewAnchor: pokemonImage.bottomAnchor)
